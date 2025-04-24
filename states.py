@@ -6,4 +6,11 @@ class CalculatorStates(StatesGroup):
     entering_price = State()      # Ввод суммы в юанях
 
 class OrderStates(StatesGroup):
-    order_info = State()  # Пока placeholder для оформления заказа
+    choosing_delivery = State()     # Выбор доставки
+    choosing_category = State()     # Выбор категории товара (вставляем!)
+    waiting_for_photo = State()     # Фото товара
+    waiting_for_link = State()      # Ссылка на товар
+    waiting_for_size = State()      # Размер
+    waiting_for_price = State()     # Цена
+    confirming_order = State()      # Подтверждение заказа
+    order_paid = State()

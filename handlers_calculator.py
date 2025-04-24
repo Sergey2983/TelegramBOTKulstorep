@@ -1,12 +1,12 @@
 from aiogram import types, Dispatcher
 from loader import dp, bot
 from aiogram.dispatcher import FSMContext
-from states import CalculatorStates
+from states import CalculatorStates, OrderStates
 from aiogram.types import InputFile
 from keyboards import (
     get_delivery_keyboard,
     get_category_keyboard,
-    get_main_menu_keyboard, get_start_inline_keyboard
+    get_main_menu_keyboard, get_start_inline_keyboard, get_payment_keyboard
 )
 
 
@@ -22,13 +22,13 @@ def register_calculator_handlers(dp: Dispatcher):
         await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
 
         # Загружаем фото (укажите корректный путь к файлу)
-        photo = InputFile("images/infocargo.png")
+        photo = InputFile("images/calc.png")
 
         # Отправляем новое сообщение с фото, подписью и клавиатурой
         await callback.message.answer_photo(
             photo=photo,
             caption=(
-                "🧮 <b>Это калькулятор стоимости.</b>\n"
+                "🧮 <b>Это калькулятор итоговой стоимости.</b>\n\n"
                 "В нем Вы можете сделать расчет стоимости товара вместе с доставкой.\n\n"
                 "⚠️<b>Товары с знаком ≈ НЕ ВЫКУПАЮТСЯ</b>\n\n"
                 "Укажите способ доставки ниже:"),
@@ -39,7 +39,7 @@ def register_calculator_handlers(dp: Dispatcher):
         await CalculatorStates.choosing_delivery.set()
 
     # Выбор типа доставки
-    @dp.callback_query_handler(lambda c: c.data.startswith("calc_delivery"), state=CalculatorStates.choosing_delivery)
+    @dp.callback_query_handler(lambda c: c.data.startswith("calc_delivery_"), state=CalculatorStates.choosing_delivery)
     async def choose_delivery(callback: types.CallbackQuery, state: FSMContext):
         await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
 
@@ -49,7 +49,7 @@ def register_calculator_handlers(dp: Dispatcher):
         await callback.message.answer("👕 Выберите категорию товара:", reply_markup=get_category_keyboard(delivery_type))
 
     # Выбор категории
-    @dp.callback_query_handler(lambda c: c.data.startswith("calc_category"), state=CalculatorStates.choosing_category)
+    @dp.callback_query_handler(lambda c: c.data.startswith("calc_category_"), state=CalculatorStates.choosing_category)
     async def choose_category(callback: types.CallbackQuery, state: FSMContext):
         await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
 
@@ -154,4 +154,3 @@ def register_calculator_handlers(dp: Dispatcher):
             reply_markup=get_start_inline_keyboard(),
             parse_mode="HTML"
         )
-
