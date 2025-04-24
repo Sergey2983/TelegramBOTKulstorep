@@ -3,10 +3,10 @@ from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
-from handlers_cart import register_cart_handlers
-from handlers_admin import register_admin_handlers
-from handlers_order import register_order_handlers
-from handlers_calculator import register_calculator_handlers
+from handlers.handlers_cart import register_cart_handlers
+from handlers.handlers_admin import register_admin_handlers
+from handlers.handlers_order import register_order_handlers
+from handlers.handlers_calculator import register_calculator_handlers
 from keyboards import get_start_inline_keyboard
 import sqlite3
 import uuid

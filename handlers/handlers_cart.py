@@ -17,7 +17,7 @@ def get_back_keyboard():
 async def show_user_cart(callback: CallbackQuery):
     user_id = callback.from_user.id
 
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("../database.db")
     cursor = conn.cursor()
     cursor.execute("""
         SELECT id, link, size, final_price, status, created_at, photo_id 
@@ -62,7 +62,7 @@ async def back_to_menu(callback: CallbackQuery):
     await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
 
     # Загружаем фото
-    photo = InputFile("images/start_logo.png")
+    photo = InputFile("../images/start_logo.png")
 
     # Отправляем фото с приветственным сообщением
     await bot.send_photo(

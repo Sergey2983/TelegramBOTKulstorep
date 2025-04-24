@@ -22,7 +22,7 @@ def register_calculator_handlers(dp: Dispatcher):
         await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
 
         # Загружаем фото (укажите корректный путь к файлу)
-        photo = InputFile("images/calc.png")
+        photo = InputFile("../images/calc.png")
 
         # Отправляем новое сообщение с фото, подписью и клавиатурой
         await callback.message.answer_photo(
@@ -114,7 +114,7 @@ def register_calculator_handlers(dp: Dispatcher):
         await state.finish()
         await callback.message.delete()
     # Указываем путь к стартовой картинке (тот же, что и в /start)
-        photo = InputFile("images/start_logo.png")
+        photo = InputFile("../images/start_logo.png")
         await callback.message.answer_photo(
             photo=photo,
             caption=(
@@ -137,7 +137,7 @@ def register_calculator_handlers(dp: Dispatcher):
         await state.finish()
 
         # Указываем путь к стартовой картинке (тот же, что и в /start)
-        photo = InputFile("images/start_logo.png")
+        photo = InputFile("../images/start_logo.png")
         await callback.message.answer_photo(
             photo=photo,
             caption=(

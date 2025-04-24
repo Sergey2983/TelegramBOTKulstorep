@@ -14,7 +14,7 @@ def register_order_handlers(dp: Dispatcher):
     @dp.callback_query_handler(lambda c: c.data in ["order"], state="*")
     async def start_order(callback: types.CallbackQuery, state: FSMContext):
 
-        photo = InputFile("images/infocargo.png")
+        photo = InputFile("../images/infocargo.png")
         await callback.message.answer_photo(
             photo=photo,
             caption=(
@@ -42,7 +42,7 @@ def register_order_handlers(dp: Dispatcher):
         await callback.message.delete()
 
         # Отправка фотографии с подписью
-        photo = InputFile("images/primer.PNG")  # Убедитесь, что путь к изображению корректен
+        photo = InputFile("../images/primer.PNG")  # Убедитесь, что путь к изображению корректен
         caption = "📸 <b>Пожалуйста, вставьте фото товара, как показано на примере:</b>"
         await callback.message.answer_photo(photo=photo, caption=caption, parse_mode="HTML")
         await OrderStates.waiting_for_photo.set()
@@ -54,7 +54,7 @@ def register_order_handlers(dp: Dispatcher):
         await state.update_data(photo=photo_id)
 
         # Отправка фото с примером + HTML-разметка
-        example_photo = InputFile("images/link.png")  # Убедись, что файл существует
+        example_photo = InputFile("../images/link.png")  # Убедись, что файл существует
         caption = ("⚠️ Товар возврату и обмену не подлежит. Мы оказываем услуги только выкупа и доставки товаров.\n\n"
                    "🔗 <b>Пожалуйста, отправьте ссылку на товар, как показано на примере: https://dw4.co/t/A/1rxTiksWr</b>")
 
@@ -78,7 +78,7 @@ def register_order_handlers(dp: Dispatcher):
         await state.update_data(link=message.text)
 
         # Отправка изображения с подписью
-        example_photo = InputFile("images/size.PNG")  # Убедитесь, что файл существует
+        example_photo = InputFile("../images/size.PNG")  # Убедитесь, что файл существует
         caption = "📏 <b>Пожалуйста, напишите размер товара, если размера нет — пропустите.</b>\n\nНапример: <i>39.5</i>"
         await message.answer_photo(photo=example_photo, caption=caption, parse_mode="HTML")
 
@@ -92,7 +92,7 @@ def register_order_handlers(dp: Dispatcher):
     async def handle_size(message: types.Message, state: FSMContext):
         await state.update_data(size=message.text)
 
-        example_photo = InputFile("images/infocargo.png")  # Убедитесь, что файл существует
+        example_photo = InputFile("../images/infocargo.png")  # Убедитесь, что файл существует
         caption = ("⚠️<b>Введите стоимость выбранного товара В ЮАНЯХ.</b>\n\n"
                 "⚠️<b>Товар возврату и обмену не подлежит.</b> Мы оказываем услуги только <u>выкупа и доставки</u> товаров.")
 
@@ -157,7 +157,7 @@ def register_order_handlers(dp: Dispatcher):
         created_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Создаем соединение с базой данных
-        conn = sqlite3.connect("database.db")
+        conn = sqlite3.connect("../database.db")
         cursor = conn.cursor()
 
         # Генерация уникального номера заказа

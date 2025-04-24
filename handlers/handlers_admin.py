@@ -18,7 +18,7 @@ async def admin_panel(message: types.Message):
 
 @dp.callback_query_handler(lambda c: c.data == "view_orders")
 async def view_orders(callback_query: CallbackQuery):
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("../database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT id, link, size, final_price, status, user_id, created_at, photo_id FROM orders ORDER BY id DESC LIMIT 10")
     rows = cursor.fetchall()
@@ -53,7 +53,7 @@ async def delete_order_handler(callback_query: types.CallbackQuery):
     order_id = int(callback_query.data.split("_")[1])
 
     # Удаление заказа из базы
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("../database.db")
     cursor = conn.cursor()
     cursor.execute("DELETE FROM orders WHERE id = ?", (order_id,))
     conn.commit()
@@ -76,7 +76,7 @@ async def edit_order(callback_query: CallbackQuery):
 @dp.callback_query_handler(lambda c: c.data.startswith("setstatus_"))
 async def set_order_status(callback_query: CallbackQuery):
     _, order_id, new_status = callback_query.data.split("_", 2)
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("../database.db")
     cursor = conn.cursor()
     cursor.execute("UPDATE orders SET status = ? WHERE id = ?", (new_status, order_id))
     conn.commit()
