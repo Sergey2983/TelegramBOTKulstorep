@@ -17,6 +17,7 @@ API_TOKEN = os.getenv("API_TOKEN")
 bot = Bot(token=API_TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot, storage=MemoryStorage())
 
+
 register_cart_handlers(dp)
 register_admin_handlers(dp)
 register_order_handlers(dp)
@@ -29,7 +30,7 @@ async def cmd_start(message: types.Message, state: FSMContext):
     tg_id = message.from_user.id
 
     # Подключение к базе данных
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("SQL/database.db")
     cursor = conn.cursor()
 
     # Проверка, существует ли уже пользователь
@@ -66,7 +67,13 @@ async def cmd_start(message: types.Message, state: FSMContext):
         reply_markup=get_start_inline_keyboard(),
         parse_mode="HTML"
     )
+yuan_rate = 11.9
 
+@dp.callback_query_handler(lambda c: c.data == "show_exchange_rate")
+async def show_exchange_rate(callback_query: types.CallbackQuery):
+    # Отправляем сообщение с актуальным курсом юаня
+    await callback_query.message.answer(
+        f"💰 Актуальный курс юаня: {yuan_rate}₽/¥", )
 
 
 # Регистрируем все хендлеры калькулятора

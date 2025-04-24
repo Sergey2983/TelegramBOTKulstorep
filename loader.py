@@ -1,8 +1,11 @@
-# loader.py
+# config.py
 from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.types import ParseMode
+from dotenv import load_dotenv
+import os
 
-ADMIN_IDS = [538734522]  # Впиши свой Telegram user_id
+load_dotenv()
 
-bot = Bot(token="6787101762:AAHSFF2wBo1I2N9tdd_U-7OozAjAlt5iqnk", parse_mode="HTML")
-dp = Dispatcher(bot, storage=MemoryStorage())
+API_TOKEN = os.getenv("API_TOKEN")
+bot = Bot(token=API_TOKEN, parse_mode="HTML")
+dp = Dispatcher(bot)

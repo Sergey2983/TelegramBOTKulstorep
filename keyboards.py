@@ -11,8 +11,11 @@ def get_next_step_keyboard():
             InlineKeyboardButton(text="Да уверен!", callback_data="yesimsure")
     )
 
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
 def get_start_inline_keyboard():
     return InlineKeyboardMarkup(row_width=1).add(
+        InlineKeyboardButton("💰 Актуальный курс Юаня", callback_data="show_exchange_rate"),
         InlineKeyboardButton("🛒 Оформить заказ (Alpha)", callback_data="order"),
         InlineKeyboardButton("📊 Калькулятор стоимости", callback_data="calculator"),
         InlineKeyboardButton("🛒 Моя корзина", callback_data="cart"),
@@ -97,9 +100,10 @@ def get_payment_keyboard():
 
 
 
-def get_question_button():
+def get_question_button(order_id):
     return InlineKeyboardMarkup().add(
-        InlineKeyboardButton("❓ Задать вопрос", url="https://t.me/kulstoree")
+        InlineKeyboardButton("❓ Задать вопрос", url="https://t.me/kulstoree"),
+
     )
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton

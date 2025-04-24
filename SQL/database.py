@@ -1,7 +1,11 @@
 import sqlite3
+import os
 
-# Подключение к базе данных и создание таблиц, если они ещё не созданы
-conn = sqlite3.connect("database.db")
+# Определение пути к базе данных (можно изменить на абсолютный путь)
+
+
+# Подключение к базе данных и создание курсора
+conn = sqlite3.connect('SQL/database.db')  # или укажи путь к базе данных
 cursor = conn.cursor()
 
 # Создание таблицы accounts
@@ -30,9 +34,8 @@ CREATE TABLE IF NOT EXISTS orders (
 )
 """)
 
-
-
-
+# Подтверждаем изменения и закрываем соединение
 conn.commit()
 conn.close()
 
+print("Таблицы созданы или уже существуют.")

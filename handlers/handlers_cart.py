@@ -7,9 +7,10 @@ import sqlite3
 
 
 # Клавиатура для возврата в меню
-def get_back_keyboard():
+def get_back_keyboard() -> object:
     return InlineKeyboardMarkup().add(
-        InlineKeyboardButton("🔙 Назад", callback_data="back_to_menu")
+        InlineKeyboardButton("🔙 Назад", callback_data="back_to_menu"),
+        InlineKeyboardButton(text="👜 Оформить заказ", callback_data="order")
     )
 
 
@@ -17,7 +18,7 @@ def get_back_keyboard():
 async def show_user_cart(callback: CallbackQuery):
     user_id = callback.from_user.id
 
-    conn = sqlite3.connect("../database.db")
+    conn = sqlite3.connect("SQL/database.db")
     cursor = conn.cursor()
     cursor.execute("""
         SELECT id, link, size, final_price, status, created_at, photo_id 
@@ -47,12 +48,12 @@ async def show_user_cart(callback: CallbackQuery):
 
             if photo_id:
                 try:
-                    await callback.message.answer_photo(photo=photo_id, caption=caption, reply_markup=get_question_button())
+                    await callback.message.answer_photo(photo=photo_id, caption=caption, reply_markup=get_question_button(order_id))
                 except Exception as e:
                     print(f"Ошибка при отправке фото: {e}")
-                    await callback.message.answer(caption, reply_markup=get_question_button())
+                    await callback.message.answer(caption, reply_markup=get_question_button(order_id))
             else:
-                await callback.message.answer(caption, reply_markup=get_question_button())
+                await callback.message.answer(caption, reply_markup=get_question_button(order_id))
 
 
 
@@ -62,7 +63,7 @@ async def back_to_menu(callback: CallbackQuery):
     await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
 
     # Загружаем фото
-    photo = InputFile("../images/start_logo.png")
+    photo = InputFile("images/start_logo.png")
 
     # Отправляем фото с приветственным сообщением
     await bot.send_photo(
