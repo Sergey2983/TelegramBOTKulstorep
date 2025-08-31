@@ -11,11 +11,14 @@ from keyboards import get_start_inline_keyboard
 import sqlite3
 import uuid
 
+
+
 load_dotenv()  # Загружаем переменные из .env
 API_TOKEN = os.getenv("API_TOKEN")
 
 bot = Bot(token=API_TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot, storage=MemoryStorage())
+
 
 
 register_cart_handlers(dp)
@@ -62,15 +65,21 @@ async def cmd_start(message: types.Message, state: FSMContext):
             "📦 Мы занимаемся исключительно выкупом и доставкой — всё просто, быстро и надёжно!\n\n"
             "⚠️ <b>Товар возврату и обмену не подлежит.</b>\n"
             "Мы оказываем услуги только выкупа и доставки товаров.\n\n"
+            
+            
+            
+            
             "👇 Выберите нужное действие ниже:"
         ),
         reply_markup=get_start_inline_keyboard(),
         parse_mode="HTML"
     )
-yuan_rate = 11.9
+yuan_rate = 12.0
 
 @dp.callback_query_handler(lambda c: c.data == "show_exchange_rate")
 async def show_exchange_rate(callback_query: types.CallbackQuery):
+    await callback_query.answer()
+
     # Отправляем сообщение с актуальным курсом юаня
     await callback_query.message.answer(
         f"💰 Актуальный курс юаня: {yuan_rate}₽/¥", )

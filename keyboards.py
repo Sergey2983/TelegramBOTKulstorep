@@ -15,8 +15,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 def get_start_inline_keyboard():
     return InlineKeyboardMarkup(row_width=1).add(
-        InlineKeyboardButton("💰 Актуальный курс Юаня", callback_data="show_exchange_rate"),
-        InlineKeyboardButton("🛒 Оформить заказ (Alpha)", callback_data="order"),
+        InlineKeyboardButton("🛒 Оформить заказ (временно не работает)", callback_data="order"),
         InlineKeyboardButton("📊 Калькулятор стоимости", callback_data="calculator"),
         InlineKeyboardButton("🛒 Моя корзина", callback_data="cart"),
         InlineKeyboardButton(text="💌 Отзывы о работе с нами", url="https://t.me/KulStorePFeedBack"),
@@ -28,7 +27,7 @@ def get_start_inline_keyboard():
 
 def get_delivery_keyboard():
     return InlineKeyboardMarkup(row_width=1).add(
-        InlineKeyboardButton("🚘 Авто доставка (14-20 дней)", callback_data="calc_delivery_standard"),
+        InlineKeyboardButton("🚘 Авто доставка (20-25 дней)", callback_data="calc_delivery_standard"),
         InlineKeyboardButton("✈️ Авиа доставка (5-7 дней)", callback_data="calc_delivery_express"),
         InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu1")
     )
@@ -65,7 +64,7 @@ def get_final_keyboard():
 
 def get_order_delivery_keyboard():
     return InlineKeyboardMarkup(row_width=1).add(
-        InlineKeyboardButton("🚘 Авто доставка (14-20 дней)", callback_data="order_delivery_standard"),
+        InlineKeyboardButton("🚘 Авто доставка (20-25 дней)", callback_data="order_delivery_standard"),
         InlineKeyboardButton("✈️ Авиа доставка (5-7 дней)", callback_data="order_delivery_express"),
         InlineKeyboardButton("🏠 Главное меню", callback_data="main_menu1")
     )

@@ -10,7 +10,7 @@ from keyboards import (
 )
 
 
-YUAN_RATE = 11.9  # курс юаня
+YUAN_RATE = 11.8
 
 from aiogram.types import InputFile
 
@@ -21,10 +21,10 @@ def register_calculator_handlers(dp: Dispatcher):
         # Удаляем исходное сообщение
         await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
 
-        # Загружаем фото (укажите корректный путь к файлу)
+
         photo = InputFile("images/calc.png")
 
-        # Отправляем новое сообщение с фото, подписью и клавиатурой
+
         await callback.message.answer_photo(
             photo=photo,
             caption=(
@@ -38,7 +38,7 @@ def register_calculator_handlers(dp: Dispatcher):
 
         await CalculatorStates.choosing_delivery.set()
 
-    # Выбор типа доставки
+
     @dp.callback_query_handler(lambda c: c.data.startswith("calc_delivery_"), state=CalculatorStates.choosing_delivery)
     async def choose_delivery(callback: types.CallbackQuery, state: FSMContext):
         await bot.delete_message(chat_id=callback.message.chat.id, message_id=callback.message.message_id)
@@ -87,12 +87,12 @@ def register_calculator_handlers(dp: Dispatcher):
 
         # Стоимость доставки (таблица тарифов)
         delivery_prices = {
-            "standard": {"clothes": 550, "shoes": 1100},
+            "standard": {"clothes": 750, "shoes": 1400},
             "express": {"tshirts": 2000, "clothes": 2400, "shoes": 3500, "jackets": 3000}
         }
 
         delivery_price = delivery_prices[delivery].get(category, 0)
-        total = (yuan_price + 30) * YUAN_RATE + delivery_price + 1000 + (150 if category_translations == "standard" else 0)
+        total = (yuan_price + 30) * YUAN_RATE + delivery_price + 1000 + (150 if delivery == "standard" else 0)
 
         # Используем русские наименования для вывода
         delivery_rus = delivery_translations.get(delivery, delivery.capitalize())

@@ -16,8 +16,8 @@ def get_back_keyboard() -> object:
 
 @dp.callback_query_handler(lambda c: c.data == "cart")
 async def show_user_cart(callback: CallbackQuery):
-    user_id = callback.from_user.id
 
+    user_id = callback.from_user.id
     conn = sqlite3.connect("SQL/database.db")
     cursor = conn.cursor()
     cursor.execute("""
@@ -33,6 +33,7 @@ async def show_user_cart(callback: CallbackQuery):
 
     if not orders:
         await callback.message.answer("🛒 Ваша корзина пуста.", reply_markup=get_back_keyboard())
+        await callback.message.delete()
     else:
         for order in orders:
             order_id, link, size, price, status, created_at, photo_id = order

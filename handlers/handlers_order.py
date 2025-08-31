@@ -9,7 +9,7 @@ from keyboards import get_order_delivery_keyboard, get_order_category_keyboard, 
     get_payment_keyboard
 import re
 
-YUAN_RATE = 11.9  # Установите актуальный курс юаня
+YUAN_RATE = 11.5
 
 def register_order_handlers(dp: Dispatcher):
     @dp.callback_query_handler(lambda c: c.data in ["order","order_back"], state="*")
